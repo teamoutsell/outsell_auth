@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Installation file for the outsell_auth module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function outsell_auth_uninstall() {
+  variable_del('outsell_auth_backwards_compat');
+}

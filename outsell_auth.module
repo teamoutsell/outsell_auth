@@ -1,0 +1,241 @@
+<?php
+
+/**
+ * @file
+ * Code for the Outsell Auth feature.
+ */
+
+include_once 'outsell_auth.features.inc';
+
+/**
+ * Implements hook_menu()
+ */
+function outsell_auth_menu() {
+
+  // Top level menu item for all outsell config.
+  // @TODO: Move this into a "core" module.
+  $menu['admin/config/outsell'] = array(
+    'title' => 'Outsell',
+    'description' => 'Outsell Options',
+    'weight' => -99,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'position' => 'left',
+  );
+
+  // Settings for authorization.
+  $menu['admin/config/outsell/auth'] = array(
+    'title' => 'Auth',
+    'description' => 'Settings around authentication and authorization.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('outsell_auth_auth_settings_form'),
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array('administer site configuration'),
+  );
+
+  return $menu;
+}
+
+/**
+ * Drupal form for our auth settings.
+ */
+function outsell_auth_auth_settings_form() {
+
+  $form['outsell_auth'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Backwards Compatibility'),
+    '#weight' => 0,
+  );
+  $form['outsell_auth']['outsell_auth_backwards_compat'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable backward compatibility mode.'),
+    '#description' => t('This setting will attempt to map Auth0 claims to the legacy Salesforce Entitlements field collection.'),
+    '#default_value' => variable_get('outsell_auth_backwards_compat', 1),
+  );
+
+  return system_settings_form($form);
+
+}
+
+/**
+ * Helper function to parse Auth0 field data to Drupal field type list_text.
+ */
+function outsell_auth_parse_to_list_text(&$values, $field_info) {
+
+  // If we have a singular value let's make it into a one-element array.
+  if (!is_array($values)) {
+    $values = array($values);
+  }
+
+  // Set some starting values.
+  $added = FALSE;
+  $return_values = array();
+  $allowed_values = &$field_info['settings']['allowed_values'];
+
+  // Loop through each value and make sure the values are allowed if we have allowed values.
+  if (isset($field_info['settings']['allowed_values']) && !empty($field_info['settings']['allowed_values'])) {
+
+    // Generate keys from the values if they exist.
+    foreach ($values as $value) {
+      if (isset($value) && !empty($value)) {
+        $key = strtolower(preg_replace('/[^\da-z]/i', '_', $value));
+        if (!array_key_exists($key, $allowed_values)) {
+          $added = TRUE;
+          $allowed_values[$key] = $value;
+        }
+        $return_values[] = $key;
+      }
+    }
+
+    // If the value is new let us add it.
+    // @TODO: This seems potentially bad. Do we want to keep this?
+    if ($added === TRUE) {
+      $field_info['settings']['allowed_values'] = $allowed_values;
+      field_update_field($field_info);
+    }
+
+  }
+
+  // If we don't need to validate let's jsut pass through.
+  else {
+    $return_values = $values;
+  }
+
+  // Return either the array or its first element.
+  return (count($return_values) > 1) ? $return_values : $return_values[0];
+
+}
+
+/**
+ * Implements hook_auth0_user_pre_login_alter().
+ *
+ * Do some preprocessing of our Auth0 user_info before we pass it on to the
+ * normal field and role mapping.
+ */
+function outsell_auth_auth0_user_pre_login_alter(&$user_info, $id_token) {
+
+  // Copy the user_metadata up a level so it works better with the built in auth0 mappings.
+  foreach ($user_info['user_metadata'] as $key => $value) {
+    $user_info[$key] = $value;
+  }
+
+  // Get our claim mappings.
+  $mappings = auth0_pipeListToArray(variable_get('auth0_claim_mapping'));
+
+  // Go through each field and appropriately parse it.
+  foreach ($mappings as $mapping) {
+
+    // Grab both our field keys.
+    $auth0_field = $mapping[0];
+    $drupal_field = $mapping[1];
+
+    // Get info on the field so we can use the correct translation.
+    $field_info = field_info_field($drupal_field);
+
+    // Call the correct translator func.
+    // @TODO: add more types here.
+    switch ($field_info['type']) {
+      case 'list_text':
+        $user_info[$auth0_field] = outsell_auth_parse_to_list_text($user_info[$auth0_field], $field_info);
+        break;
+
+      case 'list_boolean':
+        // Seriously Drupal?
+        $user_info[$auth0_field] = (int) $user_info[$auth0_field];
+        break;
+
+      case 'datestamp':
+        $user_info[$auth0_field] = strtotime($user_info[$auth0_field]);
+        break;
+
+      default:
+        $user_info[$auth0_field] = $user_info[$auth0_field];
+    }
+
+  }
+
+}
+
+/**
+ * Implements hook_user_form_user_profile_form_alter().
+ *
+ * Disable email and password fields for users who have logged in with Auth0.
+ */
+function outsell_auth_form_alter(&$form, $form_state) {
+  $test = $test;
+}
+
+/**
+ * Implements hook_form_auth0_basic_settings_form_alter().
+ *
+ * Checks to see if our auth0 config is provided by the ENV and if it is lock it
+ * down so other things cannot edit it.
+ */
+function outsell_auth_form_auth0_basic_settings_form_alter(&$form, $form_state) {
+
+  // Check to see if we have ENVIRONMENTALLY INJECTED auth0 variables.
+  if (isset($_ENV['PLATFORM_VARIABLES']) && !empty($_ENV['PLATFORM_VARIABLES'])) {
+
+    // Decode our variables.
+    $variables = json_decode(base64_decode($_ENV['PLATFORM_VARIABLES']), TRUE);
+
+    // Define fields we expect to be managed.
+    $expected_fields = array(
+      'auth0_domain',
+      'auth0_client_id',
+      'auth0_client_secret'
+    );
+
+    // Collect fields that actually are managed.
+    $managed_files = array();
+
+    // Loop through our fields and disable ones that are set and non-empty.
+    foreach ($expected_fields as $field) {
+
+      // Construct variable key.
+      $variable_key = implode(':', array('drupal', $field));
+
+      // Disable the form element if we have a value for it.
+      if (isset($variables[$variable_key]) && !empty($variables[$variable_key])) {
+        $form[$field]['#disabled'] = TRUE;
+        $managed_files[] = $field;
+      }
+
+    }
+
+    // Inform the user of this managed status.
+    if (isset($managed_files) && !empty($managed_files)) {
+
+      // The message.
+      $msg = 'The following fields are managed by the PLATFORM_VARIABLES environmental variable:';
+      $msg .= theme_item_list(array(
+        'items' => $managed_files,
+        'title' => '',
+        'attributes' => array(),
+        'type' => 'ol'
+      ));
+      $msg .= 'They will be disabled while this is true. ';
+      $msg .= 'For more information about how this works ';
+      $msg .= l(
+        t('read more.'),
+        'https://docs.platform.sh/development/variables.html',
+        array('attributes' => array('target' => '_blank'))
+      );
+
+      // Construct the markup field.
+      $enviro_notice = array(
+        '#prefix' => '<div class="messages status">',
+        '#markup' => t($msg),
+        '#suffix' => '</div>'
+      );
+
+      // Add to the begining of our form.
+      array_unshift($form, $enviro_notice);
+
+    }
+
+  }
+
+}
