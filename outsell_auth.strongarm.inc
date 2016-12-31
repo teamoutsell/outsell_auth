@@ -29,26 +29,32 @@ function outsell_auth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_claim_mapping';
-  $strongarm->value = 'entitlement_service|field_sf_entitlement_service
-    segment_prefs|field_sf_segment_preferences
-    online_content_access_segments|field_sf_online_segment_access
-    analyst_access|field_sf_access_as_analyst
-    community|field_sf_access_community
-    companies_markets|field_sf_access_companies_market
-    headlines|field_sf_access_headlines
-    insights|field_sf_access_insight
-    tools|field_sf_access_tools
-    start_date|field_sf_entitlement_start_date
-    end_date|field_sf_entitlement_end_date
-    salesforce_id|field_sf_id
-    web_ui|field_sf_website_user_interface';
+  $strongarm->value = 'analyst_access|field_sf_access_as_analyst
+community|field_sf_access_community
+companies_markets|field_sf_access_companies_market
+end_date|field_sf_entitlement_end_date
+entitlement_service|field_sf_entitlement_service
+first|field_name_first
+headlines|field_sf_access_headlines
+insights|field_sf_access_insight
+is_employee|field_outsell_employee
+job_title|field_job_title
+last|field_name_last
+location|field_work_location
+segment_prefs|field_sf_segment_preferences
+olc_member|field_sf_access_as_olc_member
+online_content_access_segments|field_sf_online_segment_access
+salesforce_id|field_sf_id
+start_date|field_sf_entitlement_start_date
+tools|field_sf_access_tools
+web_ui|field_sf_website_user_interface';
   $export['auth0_claim_mapping'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_claim_to_use_for_role';
-  $strongarm->value = '';
+  $strongarm->value = 'roles';
   $export['auth0_claim_to_use_for_role'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -120,7 +126,9 @@ function outsell_auth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_role_mapping';
-  $strongarm->value = '';
+  $strongarm->value = 'is_employee|Outsell Employee
+olc_member|OLC member
+ols_member|OLS member';
   $export['auth0_role_mapping'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -136,6 +144,62 @@ function outsell_auth_strongarm() {
   $strongarm->name = 'auth0_widget_cdn';
   $strongarm->value = 'https://cdn.auth0.com/js/lock/10.3/lock.min.js';
   $export['auth0_widget_cdn'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_access_denied_message';
+  $strongarm->value = 'Access denied. You must log in to view this page.';
+  $export['r4032login_access_denied_message'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_access_denied_message_type';
+  $strongarm->value = 'error';
+  $export['r4032login_access_denied_message_type'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_default_redirect_code';
+  $strongarm->value = '302';
+  $export['r4032login_default_redirect_code'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_display_denied_message';
+  $strongarm->value = 0;
+  $export['r4032login_display_denied_message'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_match_noredirect_pages';
+  $strongarm->value = '';
+  $export['r4032login_match_noredirect_pages'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_redirect_authenticated_users_to';
+  $strongarm->value = '';
+  $export['r4032login_redirect_authenticated_users_to'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'r4032login_user_login_path';
+  $strongarm->value = 'user/login';
+  $export['r4032login_user_login_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'site_403';
+  $strongarm->value = 'r4032login';
+  $export['site_403'] = $strongarm;
 
   return $export;
 }
