@@ -8,7 +8,7 @@
 include_once 'outsell_auth.features.inc';
 
 /**
- * Implements hook_menu()
+ * Implements hook_menu().
  */
 function outsell_auth_menu() {
 
@@ -159,11 +159,46 @@ function outsell_auth_auth0_user_pre_login_alter(&$user_info, $id_token) {
 }
 
 /**
- * Implements hook_user_form_user_profile_form_alter().
- *
- * Disable email and password fields for users who have logged in with Auth0.
+ * Implements hook_theme().
  */
-function outsell_auth_user_form_user_profile_form_alter(&$form, $form_state) {
+function outsell_auth_theme() {
+  $items = array();
+
+  $items['user_login'] = array(
+    'render element' => 'form',
+    'path' => drupal_get_path('module', 'outsell_auth') . '/templates',
+    'template' => 'user-login',
+    'preprocess functions' => array(
+      'outsell_auth_preprocess_user_login'
+    )
+  );
+
+  $items['page__user__login'] = array(
+    'render element' => 'page',
+    'path' => drupal_get_path('module', 'outsell_auth') . '/templates',
+    'base hook' => 'page',
+    'template' => 'page--user--login'
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_user_login()
+ */
+function outsell_auth_preprocess_user_login(&$variables) {
+  $variables['intro_text'] = t('This is my awesome login form');
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function outsell_auth_preprocess_page(&$variables) {
+  if (isset($variables['theme_hook_suggestions']) && !empty($variables['theme_hook_suggestions'])) {
+    if (in_array('page__user__login', $variables['theme_hook_suggestions'])) {
+      drupal_add_css(drupal_get_path('module', 'outsell_auth') . '/css/outsell_auth.css');
+    }
+  }
 }
 
 /**
