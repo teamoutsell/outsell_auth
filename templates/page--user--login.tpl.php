@@ -75,7 +75,7 @@
 
 <div id="page-wrapper"><div id="page">
 
-  <?php print $messages; ?>
+  <?php //print $messages; ?>
 
   <div id="main-wrapper"><div id="main" class="clearfix">
 

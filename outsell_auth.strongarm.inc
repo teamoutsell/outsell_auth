@@ -82,23 +82,52 @@ web_ui|field_sf_website_user_interface';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_lock_extra_settings';
-  $strongarm->value = '';
+  $strongarm->value = '{
+  "autoclose": true,
+  "autofocus": true,
+  "avatar": null,
+  "theme": {
+    "logo": "https://www.outsellinc.com/sites/default/themes/outsell/outsell2016/logo.png",
+    "primaryColor": "#77b800"
+  },
+  "languageDictionary": {
+    "title": "Log me in"
+  }
+}
+';
   $export['auth0_lock_extra_settings'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_login_css';
-  $strongarm->value = '#a0-widget .a0-panel {
-    min-width: 90%;
-    padding: 5%;
-    box-shadow: none;
-    -webkit-box-shadow: none;
+  $strongarm->value = '.outsell-auth-user-login-form-wrapper {
+  text-align: center;
+  padding: 10px;
 }
-#a0-widget .a0-panel {
-    background-color: #f6f6f2;
-    border-color: #f9f9f9;
-}';
+
+.outsell-auth-user-login-form-wrapper .auth0-lock.auth0-lock .auth0-lock-header-logo {
+  width: inherit;
+  height: 55px;
+  vertical-align: middle;
+}
+
+.outsell-auth-user-login-form-wrapper .auth0-lock.auth0-lock .auth0-lock-header-bg {
+  background: #393939;
+}
+
+.outsell-auth-user-login-form-wrapper .auth0-lock.auth0-lock .auth0-lock-header {
+  color: #CCCCCC;
+}
+
+.outsell-auth-user-login-form-wrapper .auth0-lock-content {
+  background: #f2f2f2;
+}
+
+.outsell-auth-user-login-form-wrapper .auth0-lock.auth0-lock.auth0-lock-opened-in-frame .auth0-lock-widget {
+  width: 500px;
+}
+';
   $export['auth0_login_css'] = $strongarm;
 
   $strongarm = new stdClass();

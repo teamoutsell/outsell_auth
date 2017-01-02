@@ -185,20 +185,26 @@ function outsell_auth_theme() {
 
 /**
  * Implements hook_preprocess_user_login()
+ *
+ * @todo: Options for this?
  */
 function outsell_auth_preprocess_user_login(&$variables) {
-  $variables['intro_text'] = t('This is my awesome login form');
+  $variables['pre_text'] = t('');
+  $variables['post_text'] = t('');
 }
 
 /**
  * Implements hook_preprocess_page().
  */
 function outsell_auth_preprocess_page(&$variables) {
+
+  // Only load the CSS on the user/login.
   if (isset($variables['theme_hook_suggestions']) && !empty($variables['theme_hook_suggestions'])) {
     if (in_array('page__user__login', $variables['theme_hook_suggestions'])) {
       drupal_add_css(drupal_get_path('module', 'outsell_auth') . '/css/outsell_auth.css');
     }
   }
+
 }
 
 /**
