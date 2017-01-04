@@ -100,3 +100,4 @@ features[variable][] = r4032login_user_login_path
 features[variable][] = site_403
 features_exclude[field_group][group_detail_right|user|user|default] = group_detail_right|user|user|default
 features_exclude[field_group][group_user_details|user|user|default] = group_user_details|user|user|default
+features_exclude[dependencies][outsell_community_user_profile] = outsell_community_user_profile
