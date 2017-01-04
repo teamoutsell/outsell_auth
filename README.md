@@ -47,21 +47,15 @@ web_ui|field_sf_website_user_interface
 ### Roles
 
 ```bash
-NO MAPPING YET|Analyst
-NO MAPPING YET|CDO Data Community
-NO MAPPING YET|Community Admin
-NO MAPPING YET|Community maintainer
-NO MAPPING YET|IM Council
-NO MAPPING YET|MIS member
-NO MAPPING YET|Master
-NO MAPPING YET|OLC Chairman
-NO MAPPING YET|OLC addon
+dependent on UI selection|Analyst
+cdo|CDO Data Community
+dependent on UI selection|Community maintainer
+im_member|IM Council
+mis_member|MIS member
+olc_member|OLC Chairman
 olc_member|OLC member
-ols_member|OLS member
 is_employee|Outsell Employee
-NO MAPPING YET|Startup member
-NO MAPPING YET|Subadmin
-NO MAPPING YET|Test user
+dependent on UI selection|Subadmin
 ```
 
 ### Additional Considerations
