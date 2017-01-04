@@ -148,7 +148,7 @@ web_ui|field_sf_website_user_interface';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_returnTo_app';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['auth0_returnTo_app'] = $strongarm;
 
   $strongarm = new stdClass();
