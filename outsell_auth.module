@@ -43,16 +43,28 @@ function outsell_auth_menu() {
  */
 function outsell_auth_auth_settings_form() {
 
+  // Set a default text_format form field value.
+  $default_var = array('value' => '', 'format' => NULL);
+
+  // Define our settings.
   $form['outsell_auth'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Backwards Compatibility'),
+    '#title' => t('Login widget options'),
     '#weight' => 0,
   );
-  $form['outsell_auth']['outsell_auth_backwards_compat'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Enable backward compatibility mode.'),
-    '#description' => t('This setting will attempt to map Auth0 claims to the legacy Salesforce Entitlements field collection.'),
-    '#default_value' => variable_get('outsell_auth_backwards_compat', 1),
+  $form['outsell_auth']['outsell_auth_widget_pretext'] = array(
+    '#type' => 'text_format',
+    '#title' => t('Above widget markup'),
+    '#description' => t('This setting will add some limited markup above the widget.'),
+    '#default_value' => variable_get('outsell_auth_widget_pretext', $default_var)['value'],
+    '#format' => 'filtered_html'
+  );
+  $form['outsell_auth']['outsell_auth_widget_posttext'] = array(
+    '#type' => 'text_format',
+    '#title' => t('Below widget markup'),
+    '#description' => t('This setting will add some limited markup below the widget.'),
+    '#default_value' => variable_get('outsell_auth_widget_posttext', $default_var)['value'],
+    '#format' => 'filtered_html'
   );
 
   return system_settings_form($form);
@@ -217,8 +229,14 @@ function outsell_auth_theme() {
  * @todo: Options for this?
  */
 function outsell_auth_preprocess_user_login(&$variables) {
-  $variables['pre_text'] = t('');
-  $variables['post_text'] = t('');
+
+  // Set a default format value.
+  $default_var = array('value' => '', 'format' => NULL);
+
+  // Load in the pre and post text vars.
+  $variables['pre_text'] = variable_get('outsell_auth_widget_pretext', $default_var)['value'];
+  $variables['post_text'] = variable_get('outsell_auth_widget_posttext', $default_var)['value'];
+
 }
 
 /**
