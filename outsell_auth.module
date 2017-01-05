@@ -109,6 +109,34 @@ function outsell_auth_parse_to_list_text(&$values, $field_info) {
 }
 
 /**
+ * Implements hook_auth0_params_alter().
+ *
+ * Try to grab drupal error messages and inject them into the lock widget so
+ * we get useful feedback on auth0 rule fails.
+ *
+ * See: https://github.com/auth0/lock/issues/637 (closed but doesnt work on D7)
+ */
+function outsell_auth_auth0_params_alter(&$params, &$show) {
+
+  // Get all error messages.
+  $messages = drupal_get_messages('error');
+
+  // Go through our error messages.
+  foreach ($messages['error'] as $message) {
+
+    // If a message is an auth0_lock_error then break it apart and flash message it.
+    if (strpos($message, 'auth0_lock_error:') !== FALSE) {
+      $error = explode(':', $message);
+      $show->message = $message;
+      $show->flashMessage->type = 'error';
+      $show->flashMessage->text = $error[2];
+    }
+
+  }
+
+}
+
+/**
  * Implements hook_auth0_user_pre_login_alter().
  *
  * Do some preprocessing of our Auth0 user_info before we pass it on to the
