@@ -38,6 +38,7 @@ is_employee|field_outsell_employee
 segment_prefs|field_sf_segment_preferences
 olc_member|field_sf_access_as_olc_member
 online_content_access_segments|field_sf_online_segment_access
+reports|field_sf_access_reports
 salesforce_id|field_sf_id
 start_date|field_sf_entitlement_start_date
 tools|field_sf_access_tools

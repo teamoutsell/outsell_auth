@@ -391,7 +391,7 @@ function outsell_auth_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 52,
+      'weight' => 53,
     ),
   );
 
@@ -719,6 +719,60 @@ function outsell_auth_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_sf_access_reports'.
+  $field_instances['user-user-field_sf_access_reports'] = array(
+    'bundle' => 'user',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 9,
+      ),
+      'olc_member_info' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'olc_member_info_others' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'user_bio' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_sf_access_reports',
+    'label' => 'Access reports',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 47,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_sf_access_tools'.
   $field_instances['user-user-field_sf_access_tools'] = array(
     'bundle' => 'user',
@@ -769,7 +823,7 @@ function outsell_auth_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 47,
+      'weight' => 48,
     ),
   );
 
@@ -828,7 +882,7 @@ function outsell_auth_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => 49,
+      'weight' => 50,
     ),
   );
 
@@ -935,7 +989,7 @@ function outsell_auth_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => 48,
+      'weight' => 49,
     ),
   );
 
@@ -1016,7 +1070,7 @@ function outsell_auth_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 50,
+      'weight' => 51,
     ),
   );
 
@@ -1160,7 +1214,7 @@ function outsell_auth_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 51,
+      'weight' => 52,
     ),
   );
 
@@ -1235,6 +1289,7 @@ function outsell_auth_field_default_field_instances() {
   t('Access companies markets');
   t('Access headlines');
   t('Access insight');
+  t('Access reports');
   t('Access tools');
   t('Current company');
   t('Entitlement end date');
