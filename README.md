@@ -48,20 +48,12 @@ web_ui|field_sf_website_user_interface
 ### Roles
 
 ```bash
-dependent on UI selection|Analyst
-cdo|CDO Data Community
-dependent on UI selection|Community maintainer
-im_member|IM Council
-mis_member|MIS member
-olc_member|OLC Chairman
-olc_member|OLC member
+analyst|Analyst
+cdo_member|CDO Data Community
+im_member|IM Member
 is_employee|Outsell Employee
-dependent on UI selection|Subadmin
+mis_member|MIS member
+olc_member|OLC member
+ols_member|OLS member
+registered|Registered
 ```
-
-### Additional Considerations
-
-  1. Do we want to cut down on the amount of roles?
-  2. Do we want to map to some normal drupal roles? eg authenticated/admin/etc?
-  3. Do we want to add/remove user profile fields?
-

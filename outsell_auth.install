@@ -6,6 +6,29 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function outsell_auth_install() {
+
+  // Rename the anonymous users.
+  db_update('role')
+    ->fields(array(
+      'name' => 'Guest',
+    ))
+    ->condition('name', 'anonymous user', '=')
+    ->execute();
+
+  // Rename the authenticated user.
+  db_update('role')
+    ->fields(array(
+      'name' => 'Registered',
+    ))
+    ->condition('name', 'authenticated user', '=')
+    ->execute();
+
+}
+
+/**
  * Implements hook_uninstall().
  */
 function outsell_auth_uninstall() {

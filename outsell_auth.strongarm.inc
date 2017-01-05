@@ -46,6 +46,7 @@ olc_member|field_sf_access_as_olc_member
 online_content_access_segments|field_sf_online_segment_access
 salesforce_id|field_sf_id
 start_date|field_sf_entitlement_start_date
+reports|field_sf_access_reports
 tools|field_sf_access_tools
 web_ui|field_sf_website_user_interface';
   $export['auth0_claim_mapping'] = $strongarm;
@@ -155,9 +156,14 @@ web_ui|field_sf_website_user_interface';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_role_mapping';
-  $strongarm->value = 'is_employee|Outsell Employee
+  $strongarm->value = 'analyst|Analyst
+cdo_member|CDO Data Community
+im_member|IM Member
+is_employee|Outsell Employee
+mis_member|MIS member
 olc_member|OLC member
-ols_member|OLS member';
+ols_member|OLS member
+registered|Registered';
   $export['auth0_role_mapping'] = $strongarm;
 
   $strongarm = new stdClass();
