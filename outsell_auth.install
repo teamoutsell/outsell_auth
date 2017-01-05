@@ -58,7 +58,7 @@ function outsell_auth_update_7001() {
   variable_del('openid_connect_userinfo_mapping_property_timezone');
 
   // Batch purge field_salesforce_entitlements if it exists.
-  if (!empty(field_info_field('field_salesforce_entitlements'))) {
+  if (field_info_field('field_salesforce_entitlements') !== NULL) {
     field_delete_field('field_salesforce_entitlements');
     field_purge_batch(1);
   }
