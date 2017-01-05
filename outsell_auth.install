@@ -32,7 +32,35 @@ function outsell_auth_install() {
  * Implements hook_uninstall().
  */
 function outsell_auth_uninstall() {
+
+  // Remove outsell_auth variables.
   variable_del('outsell_auth_backwards_compat');
   variable_del('outsell_auth_widget_pretext');
   variable_del('outsell_auth_widget_posttext');
+
+}
+
+/**
+ * Implements hook_update().
+ *
+ * This update will "drain the swamp" eg remove cruft from our older
+ * openid/tethys login implementation.
+ */
+function outsell_auth_update_7001() {
+
+  // Remove old openid variables that might be lingering.
+  variable_del('openid_connect_clients_enabled');
+  variable_del('openid_connect_client_generic');
+  variable_del('openid_connect_userinfo_mapping_claims');
+  variable_del('openid_connect_userinfo_mapping_property_field_current_company');
+  variable_del('openid_connect_userinfo_mapping_property_field_name_first');
+  variable_del('openid_connect_userinfo_mapping_property_field_name_last');
+  variable_del('openid_connect_userinfo_mapping_property_timezone');
+
+  // Batch purge field_salesforce_entitlements if it exists.
+  if (!empty(field_info_field('field_salesforce_entitlements'))) {
+    field_delete_field('field_salesforce_entitlements');
+    field_purge_batch(1);
+  }
+
 }
