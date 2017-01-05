@@ -171,7 +171,7 @@ ols_member|OLS member';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'auth0_widget_cdn';
-  $strongarm->value = 'https://cdn.auth0.com/js/lock/10.3/lock.min.js';
+  $strongarm->value = 'https://cdn.auth0.com/js/lock/10.8.1/lock.min.js';
   $export['auth0_widget_cdn'] = $strongarm;
 
   $strongarm = new stdClass();
