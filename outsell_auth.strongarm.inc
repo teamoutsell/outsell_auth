@@ -92,7 +92,7 @@ web_ui|field_sf_website_user_interface';
     "primaryColor": "#77b800"
   },
   "languageDictionary": {
-    "title": "Log me in"
+    "title": "Log in"
   }
 }
 ';
@@ -179,6 +179,27 @@ registered|Registered';
   $strongarm->name = 'auth0_widget_cdn';
   $strongarm->value = 'https://cdn.auth0.com/js/lock/10.8.1/lock.min.js';
   $export['auth0_widget_cdn'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'outsell_auth_widget_posttext';
+  $strongarm->value = array(
+    'value' => '<p>For additional support, please contact us at:&nbsp;<a href="mailto:clientservices@outsellinc.com">clientservices@outsellinc.com</a></p>
+',
+    'format' => 'filtered_html',
+  );
+  $export['outsell_auth_widget_posttext'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'outsell_auth_widget_pretext';
+  $strongarm->value = array(
+    'value' => '',
+    'format' => 'filtered_html',
+  );
+  $export['outsell_auth_widget_pretext'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
