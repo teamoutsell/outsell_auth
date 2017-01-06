@@ -61,7 +61,7 @@ function outsell_auth_update_7001() {
   variable_del('openid_connect_userinfo_mapping_property_field_first_name');
   variable_del('openid_connect_userinfo_mapping_property_field_last_name');
 
-  // Batch purge older fields if they exist
+  // Batch purge older fields if they exist.
   $legacy_fields = array(
     'field_salesforce_entitlements',
     'field_first_name',
@@ -69,14 +69,14 @@ function outsell_auth_update_7001() {
     'field_entitlements'
   );
 
-  // Queue up for destruction
+  // Queue up for destruction.
   foreach ($legacy_fields as $legacy_field) {
     if (field_info_field($legacy_field) !== NULL) {
       field_delete_field($legacy_field);
     }
   }
 
-  // Destruct
+  // Destruct.
   field_purge_batch(1);
 
 }
