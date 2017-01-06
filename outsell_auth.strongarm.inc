@@ -107,6 +107,10 @@ web_ui|field_sf_website_user_interface';
   padding: 10px;
 }
 
+.outsell-auth-user-login-form-wrapper img {
+  border-radius: 0;
+}
+
 .outsell-auth-user-login-form-wrapper .auth0-lock.auth0-lock .auth0-lock-header-logo {
   width: inherit;
   height: 55px;

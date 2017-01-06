@@ -9,12 +9,20 @@ html, body, #page-wrapper, #page, #main-wrapper, #main, #content {
   -webkit-transform: translateY(-50%);
 }
 
-.outsell-auth-user-login-post-text {
-  margin-top: -2.5em;
-  color: #999999;
-}
-
 .outsell-auth-user-login-pre-text {
   margin-bottom: 1em;
   color: #999999;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: "FuturaBT-Book", sans-serif;
+}
+
+.outsell-auth-user-login-post-text {
+  margin-top: -2.5em;
+  color: #999999;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: "FuturaBT-Book", sans-serif;
 }
