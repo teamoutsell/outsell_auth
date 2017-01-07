@@ -187,6 +187,13 @@ registered|Registered';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'outsell_auth_sso';
+  $strongarm->value = 1;
+  $export['outsell_auth_sso'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'outsell_auth_widget_posttext';
   $strongarm->value = array(
     'value' => '<p>For additional support, please contact us at:&nbsp;<a href="mailto:clientservices@outsellinc.com">clientservices@outsellinc.com</a></p>
