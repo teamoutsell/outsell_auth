@@ -37,6 +37,7 @@ function outsell_auth_uninstall() {
   variable_del('outsell_auth_backwards_compat');
   variable_del('outsell_auth_widget_pretext');
   variable_del('outsell_auth_widget_posttext');
+  variable_del('outsell_auth_sso');
 
 }
 
