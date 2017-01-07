@@ -73,11 +73,11 @@
  */
 ?>
 
-<div id="page-wrapper"><div id="page">
+<div id="outsell-auth-user-login-page-wrapper"><div id="outsell-auth-user-login-page">
 
-  <div id="main-wrapper"><div id="main" class="clearfix">
+  <div id="outsell-auth-user-login-main-wrapper"><div id="outsell-auth-user-login-main" class="clearfix">
 
-    <div id="content" class="column"><div class="section">
+    <div id="outsell-auth-user-login-content" class="column outsell-auth-user-login-content-wrapper"><div class="outsell-auth-user-login-section">
 
       <?php print render($page['content']); ?>
 
