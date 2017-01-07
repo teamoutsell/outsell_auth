@@ -9,6 +9,21 @@ This is a Drupal 7 module that takes the metadata from [Outsell Inc's Auth0 impl
   4. Consistent user state between other Auth0 powered Outsell properties
   5. SSO with other Auth0 powered Outsell properties
 
+Options
+-------
+
+There are some Auth options available at `admin/config/outsell/auth` to help configure a few things:
+
+### Widget Settings
+
+You can add some `filtered_html` to above and below the auth0 login widget
+
+### SSO Mode
+
+You can activate SSO mode to automatically log you in if you've already authenticated with another Auth0 powered Outsell client. This will also do Single Log Out.
+
+**NOTE:** User 1 will be immune to Single Log Out so that `drush uli` login links continue to work as expected.
+
 Data Mapping
 ------------
 
