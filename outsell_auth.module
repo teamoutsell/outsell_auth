@@ -5,6 +5,9 @@
  * Code for the Outsell Auth feature.
  */
 
+// The auth0.js library.
+define('OUTSELL_AUTH_AUTH0JS_LIB', '//cdn.auth0.com/w2/auth0-7.6.1.min.js');
+
 include_once 'outsell_auth.features.inc';
 
 /**
@@ -46,7 +49,7 @@ function outsell_auth_auth_settings_form() {
   // Set a default text_format form field value.
   $default_var = array('value' => '', 'format' => NULL);
 
-  // Define our settings.
+  // Define widget settings.
   $form['outsell_auth'] = array(
     '#type' => 'fieldset',
     '#title' => t('Login widget options'),
@@ -65,6 +68,19 @@ function outsell_auth_auth_settings_form() {
     '#description' => t('This setting will add some limited markup below the widget.'),
     '#default_value' => variable_get('outsell_auth_widget_posttext', $default_var)['value'],
     '#format' => 'filtered_html'
+  );
+
+  // Define some SSO settings.
+  $form['outsell_auth_sso_options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('SSO Options'),
+    '#weight' => 1,
+  );
+  $form['outsell_auth_sso_options']['outsell_auth_sso'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable automatic SSO/SLO.'),
+    '#description' => t('This setting will automatically log a user in or out via SSO if applicable.'),
+    '#default_value' => variable_get('outsell_auth_sso', TRUE),
   );
 
   return system_settings_form($form);
@@ -240,15 +256,89 @@ function outsell_auth_preprocess_user_login(&$variables) {
 }
 
 /**
+ * Helper function to add our auth.js SSO/SLO js.
+ */
+function outsell_auth_load_authjs_sso() {
+
+  // auth0.js options.
+  $options = array(
+    'type' => 'external',
+    'group' => JS_DEFAULT
+  );
+
+  // Add the auth0.js library from the specified CDN and our SLO JS file.
+  drupal_add_js(OUTSELL_AUTH_AUTH0JS_LIB, $options);
+
+}
+
+/**
  * Implements hook_preprocess_page().
  */
 function outsell_auth_preprocess_page(&$variables) {
 
-  // Only load the CSS on the user/login.
+  // Load our auth.js for SLO if needed.
+  if (variable_get('outsell_auth_sso', TRUE) && user_is_logged_in()) {
+
+    global $user;
+
+    // Only do this for non-user 1, this is to maintain the sanctity of drush uli logins.
+    if ($user->uid != 1) {
+
+      // Load the authjs lib.
+      outsell_auth_load_authjs_sso();
+
+      // Add the auth0 js settings.
+      $outsell_auth_js_settings = array(
+        'outsell_auth' => array(
+          'domain' => check_plain(variable_get('auth0_domain', '')),
+          'client_id' => check_plain(variable_get('auth0_client_id', '')),
+          'return_to' => url('user/logout', array('absolute' => TRUE, 'query' => drupal_get_destination()))
+        )
+      );
+      drupal_add_js($outsell_auth_js_settings, 'setting');
+
+      // Load our SLO helper.
+      drupal_add_js(drupal_get_path('module', 'outsell_auth') . '/js/outsell_auth.slo.js');
+
+    }
+
+  }
+
+  // Only load the CSS/JS on the user/login.
   if (isset($variables['theme_hook_suggestions']) && !empty($variables['theme_hook_suggestions'])) {
     if (in_array('page__user__login', $variables['theme_hook_suggestions'])) {
+
+      // Add our custom CSS for the login page.
       drupal_add_css(drupal_get_path('module', 'outsell_auth') . '/css/outsell_auth.css');
+
+      // If the user is not logged in then also load authjs lib.
+      // @todo: this might be uneccessary since lock.js includes auth0.js
+      if (!user_is_logged_in()) {
+        outsell_auth_load_authjs_sso();
+      }
+
     }
+  }
+
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+function outsell_auth_js_alter(&$javascript) {
+
+  // Use our custom auth0.lock.js to handle autoSSO.
+  if (variable_get('outsell_auth_sso', TRUE)) {
+
+    // Grab the path to the auth0.lock.js module.
+    $old_auth0_lock_js = drupal_get_path('module', 'auth0') . '/auth0.lock.js';
+    $new_auth0_lock_js = drupal_get_path('module', 'outsell_auth') . '/js/auth0.lock.js';
+
+    // Replace the auth0.lock.js with our custom implementation that handles SSO.
+    if (isset($javascript[$old_auth0_lock_js])) {
+      $javascript[$old_auth0_lock_js]['data'] = $new_auth0_lock_js;
+    }
+
   }
 
 }
