@@ -92,6 +92,7 @@ features[variable][] = auth0_returnTo_app
 features[variable][] = auth0_role_mapping
 features[variable][] = auth0_sso
 features[variable][] = auth0_widget_cdn
+features[variable][] = outsell_auth_sso
 features[variable][] = outsell_auth_widget_posttext
 features[variable][] = outsell_auth_widget_pretext
 features[variable][] = r4032login_access_denied_message
