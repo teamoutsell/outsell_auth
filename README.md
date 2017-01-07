@@ -9,6 +9,24 @@ This is a Drupal 7 module that takes the metadata from [Outsell Inc's Auth0 impl
   4. Consistent user state between other Auth0 powered Outsell properties
   5. SSO with other Auth0 powered Outsell properties
 
+Getting Started
+---------------
+
+Clone the project and install dependencies to get ready for development
+
+```bash
+git clone git@github.com:teamoutsell/outsell_auth.git
+cd outsell_auth
+composer install
+```
+
+Testing
+-------
+
+```bash
+composer test
+```
+
 Options
 -------
 
