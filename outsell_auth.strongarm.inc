@@ -194,27 +194,6 @@ registered|Registered';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'outsell_auth_widget_posttext';
-  $strongarm->value = array(
-    'value' => '<p>For additional support, please contact us at:&nbsp;<a href="mailto:clientservices@outsellinc.com">clientservices@outsellinc.com</a></p>
-',
-    'format' => 'filtered_html',
-  );
-  $export['outsell_auth_widget_posttext'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'outsell_auth_widget_pretext';
-  $strongarm->value = array(
-    'value' => '',
-    'format' => 'filtered_html',
-  );
-  $export['outsell_auth_widget_pretext'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'r4032login_access_denied_message';
   $strongarm->value = 'Access denied. You must log in to view this page.';
   $export['r4032login_access_denied_message'] = $strongarm;
