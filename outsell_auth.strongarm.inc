@@ -31,6 +31,7 @@ function outsell_auth_strongarm() {
   $strongarm->name = 'auth0_claim_mapping';
   $strongarm->value = 'analyst_access|field_sf_access_as_analyst
 community|field_sf_access_community
+company|field_current_company
 companies_markets|field_sf_access_companies_market
 end_date|field_sf_entitlement_end_date
 entitlement_service|field_sf_entitlement_service
