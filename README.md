@@ -50,7 +50,7 @@ Here are the current maps/flows for user entitlement data between `Auth0` and `D
 ### User Profile
 
 ```bash
-NO MAPPING YET|field_current_company
+company|field_current_company
 first|field_name_first
 job_title|field_job_title
 last|field_name_last
