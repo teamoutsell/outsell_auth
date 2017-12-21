@@ -89,7 +89,7 @@ web_ui|field_sf_website_user_interface';
   "autofocus": true,
   "avatar": null,
   "theme": {
-    "logo": "https://www.outsellinc.com/sites/default/themes/outsell/outsell2016/logo.png",
+    "logo": "https://editors.outsellinc.com/sites/default/files/OUTSELL-logo_greenicon_greytext_web_2015%5B1%5D.png",
     "primaryColor": "#77b800"
   },
   "languageDictionary": {
