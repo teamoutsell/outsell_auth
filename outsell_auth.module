@@ -146,22 +146,21 @@ function outsell_auth_parse_to_list_text(&$values, $field_info) {
  */
 function outsell_auth_auth0_params_alter(&$params, &$show) {
 
-  drupal_set_messages('error= ' . print_r($params,true) .  ' ==> '  . print_r($show,true));
-  // // Get all error messages.
-  // $messages = drupal_get_messages('error');
+  // Get all error messages.
+  $messages = drupal_get_messages('error');
 
-  // // Go through our error messages.
-  // foreach ($messages['error'] as $message) {
+  // Go through our error messages.
+  foreach ($messages['error'] as $message) {
 
-  //   // If a message is an auth0_lock_error then break it apart and flash message it.
-  //   if (strpos($message, 'auth0_lock_error:') !== FALSE) {
-  //     $error = explode(':', $message);
-  //     $show->message = $message;
-  //     $show->flashMessage->type = 'error';
-  //     $show->flashMessage->text = $error[2];
-  //   }
+    // If a message is an auth0_lock_error then break it apart and flash message it.
+    if (strpos($message, 'auth0_lock_error:') !== FALSE) {
+      $error = explode(':', $message);
+      $show->message = $message;
+      $show->flashMessage->type = 'error';
+      $show->flashMessage->text = $error[2];
+    }
 
-  // }
+  }
 
 }
 
