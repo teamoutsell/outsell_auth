@@ -22,7 +22,7 @@
           responseType: 'code'
         });
 
-        router.get('/login', passport.authenticate('auth0', {
+        router.get('/user/login', passport.authenticate('auth0', {
             clientID: AUTH0_CLIENT_ID,
             domain:  AUTH0_DOMAIN,
             redirectUri: AUTH0_CALLBACK_URL,
