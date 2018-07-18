@@ -79,7 +79,7 @@
 
     <div id="outsell-auth-user-login-content" class="column outsell-auth-user-login-content-wrapper"><div class="outsell-auth-user-login-section">
 
-      <?php print render($page['content']); ?>
+      <!-- <?php print render($page['content']); ?> -->
 
     </div></div> <!-- /.section, /#content -->
 
