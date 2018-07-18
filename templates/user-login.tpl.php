@@ -1,6 +1,6 @@
 <div class="outsell-auth-user-login-form-wrapper">
 
- <!--  <div class="outsell-auth-user-login-pre-text">
+  <div class="outsell-auth-user-login-pre-text">
     <?php print render($pre_text); ?>
   </div>
 
@@ -8,6 +8,6 @@
 
   <div class="outsell-auth-user-login-post-text">
     <?php print render($post_text); ?>
-  </div> -->
+  </div>
 
 </div>
