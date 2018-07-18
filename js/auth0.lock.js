@@ -15,22 +15,26 @@
         var AUTH0_OPTIONS = settings.auth0.options;
 
         // Instantiate the auth0 client to check
-        var auth0 = new Auth0({
-          domain: AUTH0_DOMAIN,
-          clientID: AUTH0_CLIENT_ID,
-          callbackURL: AUTH0_CALLBACK_URL,
-          responseType: 'code'
-        });
+        // var auth0 = new Auth0({
+        //   domain: AUTH0_DOMAIN,
+        //   clientID: AUTH0_CLIENT_ID,
+        //   callbackURL: AUTH0_CALLBACK_URL,
+        //   responseType: 'code'
+        // });
 
-        router.get('/user/login', passport.authenticate('auth0', {
-            clientID: AUTH0_CLIENT_ID,
-            domain:  AUTH0_DOMAIN,
-            redirectUri: AUTH0_CALLBACK_URL,
-            responseType: 'code',
-            scope: 'openid profile email'}),
-            function(req, res) {
-              res.redirect("/");
-           });
+        if ( window.location.pathname == "/user/login" ) {
+             window.location.href = 'https://outsell.auth0.com/authorize?redirect_uri='+AUTH0_CALLBACK_URL+'&client_id='+AUTH0_CLIENT_ID+'&response_type=code'; 
+          }
+
+        // router.get('/user/login', passport.authenticate('auth0', {
+        //     clientID: AUTH0_CLIENT_ID,
+        //     domain:  AUTH0_DOMAIN,
+        //     redirectUri: AUTH0_CALLBACK_URL,
+        //     responseType: 'code',
+        //     scope: 'openid profile email'}),
+        //     function(req, res) {
+        //       res.redirect("/");
+        //    });
         // var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, AUTH0_OPTIONS);
         // lock.show(AUTH0_SHOW);
 
