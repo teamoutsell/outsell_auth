@@ -22,26 +22,35 @@
           responseType: 'code'
         });
 
-        var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, AUTH0_OPTIONS);
-        lock.show(AUTH0_SHOW);
+        router.get('/login', passport.authenticate('auth0', {
+            clientID: AUTH0_CLIENT_ID,
+            domain:  AUTH0_DOMAIN,
+            redirectUri: AUTH0_CALLBACK_URL,
+            responseType: 'code',
+            scope: 'openid profile email'}),
+            function(req, res) {
+              res.redirect("/");
+           });
+        // var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, AUTH0_OPTIONS);
+        // lock.show(AUTH0_SHOW);
 
-        // Check to see if we have SSO data
-        auth0.getSSOData(true, function (err, ssoData) {
+        // // Check to see if we have SSO data
+        // auth0.getSSOData(true, function (err, ssoData) {
 
-          // If we have SSO data lets autologin
-          if (ssoData.sso) {
+        //   // If we have SSO data lets autologin
+        //   if (ssoData.sso) {
 
-            // Hide log page things
-            lock.hide();
-            $('.outsell-auth-user-login-pre-text').hide();
-            $('.outsell-auth-user-login-post-text').hide();
+        //     // Hide log page things
+        //     lock.hide();
+        //     $('.outsell-auth-user-login-pre-text').hide();
+        //     $('.outsell-auth-user-login-post-text').hide();
 
-            // Do the login
-            auth0.login({connection: 'outsell-users'});
+        //     // Do the login
+        //     auth0.login({connection: 'outsell-users'});
 
-          }
+        //   }
 
-        });
+        // });
 
       })
     }

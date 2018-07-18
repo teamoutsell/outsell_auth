@@ -6,7 +6,7 @@
  */
 
 // The auth0.js library.
-define('OUTSELL_AUTH_AUTH0JS_LIB', '//cdn.auth0.com/w2/auth0-7.6.1.min.js');
+define('OUTSELL_AUTH_AUTH0JS_LIB', '//cdn.auth0.com/js/lock/11.x.y/lock.min.js');
 
 include_once 'outsell_auth.features.inc';
 
