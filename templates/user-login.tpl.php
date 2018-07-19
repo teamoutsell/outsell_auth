@@ -1,4 +1,4 @@
-<div class="outsell-auth-user-login-form-wrapper">
+<div class="outsell-auth-user-login-form-wrapper" hidden>
 
   <!-- <div class="outsell-auth-user-login-pre-text">
     <?php print render($pre_text); ?>
